@@ -7,19 +7,19 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
 @WebServlet("/member/list")
-public class MemberListServlet extends GenericServlet {
+public class MemberListServlet extends HttpServlet {
 
   @Override
-  public void service(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     Connection conn = null;
     Statement stmt = null;
     ResultSet rs = null;
@@ -42,7 +42,7 @@ public class MemberListServlet extends GenericServlet {
             rs.getInt("MNO") + "," +
             "<a href='update?no=" + rs.getInt("mno") + "'>" + rs.getString("MNAME") + "</a>," +
             rs.getString("EMAIL") + "," +
-            rs.getDate("CRE_DATE") + "<br>"
+            rs.getDate("CRE_DATE") + "<a href='delete?no=" + rs.getInt("mno") + "'>[삭제]</a><br>"
         );
       }
       out.println("</body></html>");
